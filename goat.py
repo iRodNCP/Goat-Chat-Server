@@ -8,6 +8,7 @@ from datetime import datetime
 
 app = Sanic(__name__)
 
+
 goat = Blueprint('goat', url_prefix='/goat')
 
 
@@ -39,7 +40,10 @@ class GoatChat:
     
     @staticmethod
     def get_room(id):
-        return GoatChat.rooms.get(id, Room())
+        room = GoatChat.rooms.get(id)
+        if room is None:
+            room = GoatChat.rooms[id] = Room()
+        return room
     
     @staticmethod
     def find_number(n):
@@ -129,6 +133,7 @@ class Goat:
             del self.room_obj.goats_in_room[self.player_id]
             if len(self.room_obj.goats_in_room) < 1:
                 del GoatChat.rooms[self.room]
+            self.room_obj = None
             
     def send(self, data):
         self.message_queue.append(data)
