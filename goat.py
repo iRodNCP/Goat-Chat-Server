@@ -69,7 +69,7 @@ async def garbage_collector():
             time_since_last_poll = datetime.now() - goat.last_poll
             if time_since_last_poll.seconds > 15:
                 goat.leave_room()
-                available_ids.append(goat.player_id)
+                GoatChat.available_ids.append(goat.player_id)
                 if goat.player_id in GoatChat.goats:
                     del  GoatChat.goats[goat.player_id]
         await asyncio.sleep(5)
@@ -208,7 +208,7 @@ async def disconnect(request):
     goat = GoatChat.get_goat(id)
     del GoatChat.goats[id]
     goat.leave_room()
-    available_ids.append(id)
+    GoatChat.available_ids.append(id)
     return response.text('&e=0')
     
 if __name__ == '__main__':
