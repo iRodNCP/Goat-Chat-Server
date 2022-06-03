@@ -154,14 +154,11 @@ async def new_goat(request):
     for goat in GoatChat.goats.values():
         if goat.name == username:
             return response.text('&e=2')
-
-
-    global available_ids, goats
    
-    if not available_ids:
+    if not GoatChat.available_ids:
         return response.text('&e=3')
     
-    id = available_ids.pop(0)
+    id = GoatChat.available_ids.pop(0)
     goats[id] = Goat(name=username,player_id=id,last_poll=datetime.now())
     m = 0
     if username == 'iRod':
@@ -187,7 +184,6 @@ async def join_room(request):
     
 @goat.post('/chat')
 async def server_chat(request):
-    global goats
     data = request.form.get('d', None)
     id = int(request.form.get('id', -999))
     if id < 0 or id not in GoatChat.goats or data is None:
@@ -206,7 +202,6 @@ async def server_chat(request):
     
 @goat.post('/drop')
 async def disconnect(request):
-    global goats
     id = int(request.form.get('id', -999))
     if id < 0 or id not in GoatChat.goats:
         return response.text('&e=1')
