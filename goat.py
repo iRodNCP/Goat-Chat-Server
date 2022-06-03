@@ -39,7 +39,7 @@ class GoatChat:
     
     @staticmethod
     def get_room(id):
-        return GoatChat.rooms.get(id, Room(id))
+        return GoatChat.rooms.get(id, Room())
     
     @staticmethod
     def find_number(n):
