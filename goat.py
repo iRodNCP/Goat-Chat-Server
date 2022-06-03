@@ -159,7 +159,7 @@ async def new_goat(request):
         return response.text('&e=3')
     
     id = GoatChat.available_ids.pop(0)
-    goats[id] = Goat(name=username,player_id=id,last_poll=datetime.now())
+    GoatChat.add_goat(id, Goat(name=username,player_id=id,last_poll=datetime.now()))
     m = 0
     if username == 'iRod':
         m = 1
