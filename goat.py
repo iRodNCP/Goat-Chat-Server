@@ -60,7 +60,7 @@ class GoatChat:
         return chr(n + 61)
 
 @goat.listener('before_server_start')
-async def check_avatar_item_directory(app, loop):
+async def start_garbage_collector(app, loop):
     asyncio.create_task(garbage_collector())
                      
 async def garbage_collector():
